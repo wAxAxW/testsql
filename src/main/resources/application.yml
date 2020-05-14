@@ -1,0 +1,27 @@
+server:
+  #  服务端口
+  port: 8022
+
+druid:
+  stat:
+    #    慢SQL记录
+    slowSqlMillis: 5000
+spring:
+  #  数据库连接配置
+  datasource:
+    name:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    #    driver=com.mysql.cj.jdbc.Driver
+    #url=jdbc:mysql://localhost:3306/(需要连接的数据库名称)? useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    #user=(数据库账号)
+    #password=(数据库密码)
+    username: root
+    password:
+    #  设置数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    初始化连接数量
+    initialSize: 5
+    dbcp2:
+      validation-query: select 1 from DUAL
+
