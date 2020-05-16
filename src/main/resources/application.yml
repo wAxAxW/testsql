@@ -1,27 +1,43 @@
+#      服务端口
 server:
-  #  服务端口
   port: 8022
-
-druid:
-  stat:
-    #    慢SQL记录
-    slowSqlMillis: 5000
 spring:
-  #  数据库连接配置
-  datasource:
+  application:
     name:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-    #    driver=com.mysql.cj.jdbc.Driver
-    #url=jdbc:mysql://localhost:3306/(需要连接的数据库名称)? useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-    #user=(数据库账号)
-    #password=(数据库密码)
-    username: root
-    password:
-    #  设置数据源
+  #  数据源
+  datasource:
+    name: druidDataSource
+    # 主数据源，默认的
     type: com.alibaba.druid.pool.DruidDataSource
-    #    初始化连接数量
-    initialSize: 5
-    dbcp2:
-      validation-query: select 1 from DUAL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/my_test?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    max-active: 100
+    initial-size: 20
+    max-wait: 60000
+    min-idle: 10
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: select 'x'
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+
+
+  groovy:
+    template:
+      check-template-location: false
+      # mybatis plus 配置
+mybatis-plus:
+  #  xml文件路径
+  mapper-locations: classpath:mapper/*.xml
+  #  MyBaits 别名包扫描路径
+  typeAliasesPackage: com.example.demo.pojo.vo
+  #  枚举类 扫描路径
+  typeEnumsPackage: com.example.demo.enum
+  #  是否开启自动驼峰命名规则（camel case）映射
+  mapUnderscoreToCamelCase: true
+  #  指定当结果集中值为 null 的时候是否调用映射对象的 Setter（Map 对象时为 put）方法
+  callSettersOnNulls: false
 
